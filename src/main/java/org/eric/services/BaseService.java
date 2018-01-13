@@ -2,6 +2,8 @@ package org.eric.services;
 
 import java.io.StringWriter;
 import java.sql.Connection;
+import java.sql.SQLException;
+import org.apache.commons.dbcp.BasicDataSource;
 
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -9,10 +11,15 @@ import org.apache.velocity.app.Velocity;
 
 public class BaseService {
 
-    protected Connection conn;
+    protected BasicDataSource datasource;
     
-    public BaseService(Connection conn){
-        this.conn = conn;
+    public BaseService(BasicDataSource datasource){
+        this.datasource = datasource;
+    }
+    
+    public Connection getConnection() throws SQLException{
+        
+        return datasource.getConnection();
     }
 
     /**

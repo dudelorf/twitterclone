@@ -20,20 +20,14 @@ public class HomeServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException{
         response.setContentType("text/html");
+        
         BasicDataSource datasource = (BasicDataSource) getServletContext()
-                                        .getAttribute("datasource");
-        final PrintWriter out = response.getWriter();
-                                        
-        try {
-            Connection conn = datasource.getConnection();
-            HomeService svc = new HomeService(conn);
-
-            out.print(svc.getHomePage(1));
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
+                                        .getAttribute("datasource");                                
+        
+        HomeService svc = new HomeService(datasource);
+        PrintWriter out = response.getWriter();
+        
+        out.print(svc.getHomePage(1));
     }
 
 }

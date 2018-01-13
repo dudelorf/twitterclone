@@ -5,7 +5,7 @@
  */
 package org.eric.services;
 
-import java.sql.Connection;
+import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.velocity.VelocityContext;
 
 /**
@@ -14,8 +14,8 @@ import org.apache.velocity.VelocityContext;
  */
 public class LoginService extends BaseService{
     
-    public LoginService(Connection conn){
-        super(conn);
+    public LoginService(BasicDataSource datasource){
+        super(datasource);
     }
     
     public String getLoginPage(){

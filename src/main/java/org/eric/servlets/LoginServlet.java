@@ -22,20 +22,13 @@ public class LoginServlet extends HttpServlet{
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException{
         response.setContentType("text/html");
+        
         BasicDataSource datasource = (BasicDataSource) getServletContext()
                                         .getAttribute("datasource");
-        final PrintWriter out = response.getWriter();
-                                        
-        try {
-            Connection conn = datasource.getConnection();
-            LoginService svc = new LoginService(conn);
-
-            out.print(svc.getLoginPage());
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
         
+        PrintWriter out = response.getWriter();
+        LoginService svc = new LoginService(datasource);
+
+        out.print(svc.getLoginPage());
     }
 }
