@@ -7,5 +7,7 @@ create table users (
     id int(31) PRIMARY KEY AUTO_INCREMENT NOT NULL,
     username VARCHAR(127) NOT NULL,
     password VARCHAR(127) NOT NULL,
-    salt VARCHAR(31) NOT NULL
+    salt VARCHAR(63) NOT NULL,
+    token VARCHAR(63),
+    token_expiration DATETIME
 );
