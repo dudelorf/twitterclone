@@ -22,4 +22,10 @@ public class LoginService extends BaseService{
         VelocityContext ctx = new VelocityContext();
         return renderView(ctx, "pages/login.vm");
     }
+    
+    public boolean login(String username, String password){
+        
+        
+        return true;
+    }
 }

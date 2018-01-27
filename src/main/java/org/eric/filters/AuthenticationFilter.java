@@ -18,8 +18,8 @@ public class AuthenticationFilter implements Filter{
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
         throws IOException, ServletException {
         
-        //TODO
-        System.out.println("filtering!");
+        //TODO validate user is logged in
+        System.out.println("validating login");
         chain.doFilter(request, response);
     }
 

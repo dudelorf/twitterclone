@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<head>
+    <title>Registration</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <script type="text/javascript" src="/js/register.js"></script>
+</head>
+<body>
+    <h1>Register for a new account!</h1>
+    
+    <form method="POST" action="/registration">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" />
+        <br/>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" />
+        <br/>
+        <label for="confirmpass">Confirm Password:</label>
+        <input type="password" id="confirmpass" name="confirmpass" />
+        <br/>
+        <button type="submit" onclick="validateCredentials(); return false;">Register</button>
+    </form>
+    <div id="registration-errors--container">
+        
+    </div>
+</body>

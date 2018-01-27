@@ -4,5 +4,18 @@
 </head>
 <body>
     <h1>Login page</h1>
-    <a href="/home">Visit home</a>
+    <form id="login-form" method="POST" action="/login">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" />
+        <br/>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" />
+        <br/>
+        <label for="confirmpass">Confirm Password:</label>
+        <input type="password" id="confirmpass" name="confirmpass" />
+        <br/>
+        <button type="submit">Login</button>
+    </form>
+    <h2>Don't have an account yet?</h2>
+    <a href="/registration">Register here!</a>
 </body>

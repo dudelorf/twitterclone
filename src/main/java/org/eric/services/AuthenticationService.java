@@ -4,17 +4,11 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAmount;
 import java.util.Map;
-import javafx.util.Duration;
 import org.apache.commons.dbcp.BasicDataSource;
-import org.apache.commons.dbutils.DbUtils;
-import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.MapHandler;
@@ -58,11 +52,7 @@ public class AuthenticationService extends BaseService{
     public boolean validateCredentials(String username, String password){
         User currentUser = getUserDetails(username);
         String salt = currentUser.getSalt();
-        if(encryptPassword(password, salt).equals(currentUser.getPassword())){
-            return true;
-        }else{
-            return false;
-        }
+        return encryptPassword(password, salt).equals(currentUser.getPassword());
     }
     
     public String setToken(String username){
