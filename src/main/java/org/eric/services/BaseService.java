@@ -52,17 +52,12 @@ public class BaseService {
      * @return results
      */
     public <T> T query(ResultSetHandler<T> handler, String sql, Object ... params){
-        Connection conn = null;
-        
         try{
-            conn = datasource.getConnection();
-            QueryRunner runner = new QueryRunner();
-            
-            return runner.query(conn, sql, params, handler);
+            QueryRunner runner = new QueryRunner(datasource);
+            return runner.query(sql, params, handler);
         }catch(SQLException exc){
+            exc.printStackTrace();
             return null;
-        }finally{
-            DbUtils.closeQuietly(conn);
         }
     }
     
@@ -74,17 +69,12 @@ public class BaseService {
      * @return number of affected rows
      */
     public int update(String sql, Object ... params){
-        Connection conn = null;
-        
         try{
-            conn = datasource.getConnection();
-            QueryRunner runner = new QueryRunner();
-            
-            return runner.update(conn, sql, params);
+            QueryRunner runner = new QueryRunner(datasource);
+            return runner.update(sql, params);
         }catch(SQLException exc){
+            exc.printStackTrace();
             return -1;
-        }finally{
-            DbUtils.closeQuietly(conn);
         }
     }
 }

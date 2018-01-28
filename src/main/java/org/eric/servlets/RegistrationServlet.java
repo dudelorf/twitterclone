@@ -16,7 +16,7 @@ public class RegistrationServlet extends HttpServlet{
     static final long serialVersionUID = 1;
     
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException{
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
@@ -29,8 +29,8 @@ public class RegistrationServlet extends HttpServlet{
     }
     
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws IOException, ServletException{
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+           throws ServletException, IOException{
        
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
@@ -39,15 +39,17 @@ public class RegistrationServlet extends HttpServlet{
         String username = (String) request.getParameter("username");
         String password = (String) request.getParameter("password");
 
+        
         BasicDataSource datasource = (BasicDataSource) request.getServletContext()
                                             .getAttribute("datasource");
         RegistrationService svc = new RegistrationService(datasource);
         
-        Map<String, String> errors = svc.processRegistration(username, password);
-        if(errors.isEmpty()){
+        String error = svc.processRegistration(username, password);
+        if(error == null){
+            System.out.println("saved");
             request.getRequestDispatcher("/login").forward(request, response);
         }else{
-            out.print(svc.showRegistrationErrors(errors));
+            out.print(svc.showRegistrationErrors(error));
         }
         
     }

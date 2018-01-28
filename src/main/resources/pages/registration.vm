@@ -19,7 +19,10 @@
         <br/>
         <button id="submit-btn" type="submit">Register</button>
     </form>
+    #if($error)
     <div id="registration-errors--container">
-        
+        <h3>An error occurred!</h3>
+        <h3>$error</h3>
     </div>
+    #end
 </body>

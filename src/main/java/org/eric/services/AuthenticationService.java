@@ -33,7 +33,7 @@ public class AuthenticationService extends BaseService{
     }
     
     public String generateSalt(){
-        byte[] saltBytes = new byte[12];
+        byte[] saltBytes = new byte[8];
         SecureRandom rnd = new SecureRandom();
         rnd.nextBytes(saltBytes);
         
@@ -49,72 +49,43 @@ public class AuthenticationService extends BaseService{
         return token;
     }
     
+    public Timestamp generateTokenExpiration(){
+        Timestamp tokenExpiration = Timestamp.from(Instant.now().plus(24, ChronoUnit.HOURS));
+        return tokenExpiration;
+    }
+    
     public boolean validateCredentials(String username, String password){
-        User currentUser = getUserDetails(username);
+        UserService svc = new UserService(datasource);
+        User currentUser = svc.loadByUsername(username);
         String salt = currentUser.getSalt();
         return encryptPassword(password, salt).equals(currentUser.getPassword());
     }
     
-    public String setToken(String username){
-        User theUser = getUserDetails(username);
-        String token = generateToken();
-        Timestamp tokenExpiration = Timestamp.from(Instant.now().plus(24, ChronoUnit.HOURS));
+    public boolean registerUser(String username, String password){
+        String salt = generateSalt();
+        String encryptedPass = encryptPassword(password, salt);
         
-        String sql = "UPDATE users SET "
-                   + "token = ?, "
-                   + "token_expiration = ? "
-                   + "WHERE id = ? ";
+        User newUser = new User();
+        newUser.setUsername(username);
+        newUser.setSalt(salt);
+        newUser.setPassword(encryptedPass);
         
-        if(update(sql, token, tokenExpiration, theUser.getId()) > 0){
-            return token;
-        }else{
-            return "";
-        }
+        UserService svc = new UserService(datasource);
+        return svc.saveUser(newUser);
     }
     
     public boolean validateToken(String token){
         boolean valid = false;
         
-        String sql = "SELECT token_expiration "
-                   + "FROM users "
-                   + "WHERE token = ?";
-            
-        Map<String, Object> result = query(new MapHandler(), sql, token);
-            
-        if(!result.isEmpty()){
-            Timestamp expiration = (Timestamp) result.get("token_expiration");
-            if(expiration.toInstant().isBefore(Instant.now())){
-                updateTokenExpiration(token);
-                valid = true;
-            }
-        }
-        
         return valid;
     }
     
-    protected void updateTokenExpiration(String token){
-        String sql = "UPDATE users "
-                   + "SET token_expiration = ? "
-                   + "WHERE token = ? ";
-
-        Instant expiration = Instant.now().plus(24, ChronoUnit.HOURS);
-        Timestamp tokenExpiration = Timestamp.from(expiration);
-        update(sql, tokenExpiration, token);
-    }
-    
-    protected User getUserDetails(String username){
-
-        ResultSetHandler<User> handler = new BeanHandler<>(User.class);
-
-        String sql = "SELECT * "
-                   + "FROM users "
-                   + "WHERE username = ? ";
-
-        User theUser = query(handler, sql, username);
-        if(theUser == null){
-            return new User();
+    public boolean validateUsername(String username){
+        UserService svc = new UserService(datasource);
+        if(svc.loadByUsername(username).getUsername().equals("")){
+            return true;
         }else{
-            return theUser;
+            return false;
         }
     }
 }

@@ -16,13 +16,23 @@ public class RegistrationService extends BaseService{
         return renderView(ctx, "pages/registration.vm");
     }
     
-    public String showRegistrationErrors(Map<String, String> errors){
-        return "error page";
+    public String showRegistrationErrors(String error){
+        VelocityContext ctx = new VelocityContext();
+        ctx.put("error", error);
+        return renderView(ctx, "pages/registration.vm");
     }
     
-    public Map<String, String> processRegistration(String username, String password){
+    public String processRegistration(String username, String password){
         Map<String, String> map = new HashMap<>();
+        AuthenticationService svc = new AuthenticationService(datasource);
         
-        return map;
+        if(!svc.validateUsername(username)){
+            return "This email has already been registered.";
+            
+        }else if(!svc.registerUser(username, password)){
+            return "There was an error registereing. Please try again.";
+        }
+        
+        return null;
     }
 }

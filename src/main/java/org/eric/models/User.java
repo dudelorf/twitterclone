@@ -1,11 +1,15 @@
 package org.eric.models;
 
+import java.sql.Timestamp;
+
 public class User {
 
-    private int id;
-    private String username;
-    private String salt;
-    private String password;
+    private int id = -1;
+    private String username = "";
+    private String salt = "";
+    private String password = "";
+    private String token = "";
+    private Timestamp token_expiration = null;
     
     public String getUsername() {
         return username;
@@ -37,5 +41,21 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public Timestamp getToken_expiration() {
+        return token_expiration;
+    }
+
+    public void setToken_expiration(Timestamp token_expiration) {
+        this.token_expiration = token_expiration;
     }
 }

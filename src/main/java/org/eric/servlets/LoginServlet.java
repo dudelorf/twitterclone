@@ -19,7 +19,7 @@ public class LoginServlet extends HttpServlet{
     static final long serialVersionUID = 1;
     
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException{
         response.setContentType("text/html");
         
@@ -30,5 +30,14 @@ public class LoginServlet extends HttpServlet{
         LoginService svc = new LoginService(datasource);
 
         out.print(svc.getLoginPage());
+    }
+    
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws IOException, ServletException{
+        
+        PrintWriter out = response.getWriter();
+        
+        out.print("registration success");
     }
 }
