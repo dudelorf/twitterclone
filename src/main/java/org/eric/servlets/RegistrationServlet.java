@@ -2,13 +2,11 @@ package org.eric.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.dbcp.BasicDataSource;
-import org.eric.services.LoginService;
 import org.eric.services.RegistrationService;
 
 public class RegistrationServlet extends HttpServlet{
@@ -44,6 +42,7 @@ public class RegistrationServlet extends HttpServlet{
                                             .getAttribute("datasource");
         RegistrationService svc = new RegistrationService(datasource);
         
+        //Attempt to register user
         String error = svc.processRegistration(username, password);
         if(error == null){
             System.out.println("saved");

@@ -35,18 +35,20 @@ public class UserService extends BaseService{
     }
     
     protected boolean updateUser(User theUser){
-        String sql = "INSERT INTO users"
-                   + "(username,"
-                   + "password,"
-                   + "salt,"
-                   + "token,"
-                   + "token_expiration)"
-                   + "VALUES"
-                   + "(?, ?, ?, ?, ?)";
+        String sql = "UPDATE users SET "
+                + " username = ?, "
+                + " password = ?, "
+                + " salt = ?, "
+                + " token = ?, "
+                + " token_expiration = ? "
+                + " WHERE id = ? ";
         
         if(update(sql, theUser.getUsername(),
                        theUser.getPassword(), 
-                       theUser.getSalt()) != -1){
+                       theUser.getSalt(),
+                       theUser.getToken(),
+                       theUser.getToken_expiration(),
+                       theUser.getId()) != -1){
             return true;
         }else{
             return false;

@@ -23,9 +23,9 @@ public class LoginService extends BaseService{
         return renderView(ctx, "pages/login.vm");
     }
     
-    public boolean login(String username, String password){
-        
-        
-        return true;
+    public String getLoginErrorPage(){
+        VelocityContext ctx = new VelocityContext();
+        ctx.put("error", "Invalid login credentials.");
+        return renderView(ctx, "pages/login.vm");
     }
 }

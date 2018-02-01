@@ -11,10 +11,12 @@
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" />
         <br/>
-        <label for="confirmpass">Confirm Password:</label>
-        <input type="password" id="confirmpass" name="confirmpass" />
-        <br/>
         <button type="submit">Login</button>
+        #if($error)
+        <div id="login-errors--container">
+            <h3>$error</h3>
+        </div>
+        #end
     </form>
     <h2>Don't have an account yet?</h2>
     <a href="/registration">Register here!</a>

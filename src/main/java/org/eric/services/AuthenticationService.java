@@ -7,11 +7,7 @@ import java.security.SecureRandom;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Map;
 import org.apache.commons.dbcp.BasicDataSource;
-import org.apache.commons.dbutils.ResultSetHandler;
-import org.apache.commons.dbutils.handlers.BeanHandler;
-import org.apache.commons.dbutils.handlers.MapHandler;
 import org.eric.models.User;
 
 public class AuthenticationService extends BaseService{
@@ -59,6 +55,21 @@ public class AuthenticationService extends BaseService{
         User currentUser = svc.loadByUsername(username);
         String salt = currentUser.getSalt();
         return encryptPassword(password, salt).equals(currentUser.getPassword());
+    }
+    
+    public String loginUser(String username){
+        UserService svc = new UserService(datasource);
+        
+        User currentUser = svc.loadByUsername(username);
+        String token = generateToken();
+        Timestamp tokenExp = generateTokenExpiration();
+        
+        currentUser.setToken(token);
+        currentUser.setToken_expiration(tokenExp);
+        
+        svc.saveUser(currentUser);
+        
+        return token;
     }
     
     public boolean registerUser(String username, String password){

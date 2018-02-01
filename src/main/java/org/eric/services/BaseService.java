@@ -4,7 +4,6 @@ import java.io.StringWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import org.apache.commons.dbcp.BasicDataSource;
-import org.apache.commons.dbutils.DbUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 
