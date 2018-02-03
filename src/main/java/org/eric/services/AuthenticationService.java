@@ -88,6 +88,15 @@ public class AuthenticationService extends BaseService{
     public boolean validateToken(String token){
         boolean valid = false;
         
+        UserService svc = new UserService(datasource);
+        User theUser = svc.loadByToken(token);
+        Timestamp tokenExp = theUser.getToken_expiration();
+        if(tokenExp == null){
+            valid = false;
+        }else if(tokenExp.toInstant().isAfter(Instant.now())){
+            valid = true;
+        }
+        
         return valid;
     }
     

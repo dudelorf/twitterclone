@@ -26,6 +26,21 @@ public class UserService extends BaseService{
         }
     }
     
+    public User loadByToken(String token){
+        ResultSetHandler<User> handler = new BeanHandler<>(User.class);
+
+        String sql = "SELECT * "
+                   + "FROM users "
+                   + "WHERE token = ? ";
+
+        User theUser = query(handler, sql, token);
+        if(theUser == null){
+            return new User();
+        }else{
+            return theUser;
+        }
+    }
+    
     public boolean saveUser(User theUser){
         if(theUser.getId() != -1){
             return updateUser(theUser);

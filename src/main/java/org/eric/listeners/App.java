@@ -13,6 +13,7 @@ public class App implements ServletContextListener {
     /**
      * App initialization
      */
+    @Override
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext ctx = sce.getServletContext();
         
@@ -46,5 +47,6 @@ public class App implements ServletContextListener {
         return dbpool;
     }
     
+    @Override
     public void contextDestroyed(ServletContextEvent sce) {}
 }

@@ -1,6 +1,8 @@
 package org.eric;
 
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 public class Config {
@@ -70,5 +72,10 @@ public class Config {
 
     public String getTemplateDir(){
         return props.getProperty("template.dir");
+    }
+    
+    public List<String> getWhitelistRoutes(){
+        String whitelist = props.getProperty("whitelist");
+        return Arrays.asList(whitelist.split(","));
     }
 }

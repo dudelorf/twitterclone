@@ -25,8 +25,6 @@ public class LoginServlet extends HttpServlet{
         
         BasicDataSource datasource = (BasicDataSource) getServletContext()
                                         .getAttribute("datasource");
-        
-        
         LoginService svc = new LoginService(datasource);
 
         out.print(svc.getLoginPage());
