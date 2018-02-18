@@ -1,6 +1,6 @@
 package org.eric.filters;
 
-import org.eric.Config;
+import org.eric.app.Config;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.Filter;

@@ -1,4 +1,4 @@
-package org.eric;
+package org.eric.app;
 
 import java.net.URL;
 import java.util.Arrays;
@@ -45,8 +45,8 @@ public class Config {
 
     private static String getTemlateDirPath(){
         URL resource = Thread.currentThread()
-                                  .getContextClassLoader()
-                                  .getResource("/");
+                             .getContextClassLoader()
+                             .getResource("/");
         return resource.getPath();
     }
 

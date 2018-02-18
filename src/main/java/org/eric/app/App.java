@@ -1,4 +1,4 @@
-package org.eric.listeners;
+package org.eric.app;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -6,7 +6,7 @@ import javax.servlet.ServletContextListener;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.velocity.app.Velocity;
-import org.eric.Config;
+import org.eric.app.Config;
 
 public class App implements ServletContextListener {
     
