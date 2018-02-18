@@ -1,14 +1,17 @@
-package org.eric.services;
+package org.eric.controllers;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.velocity.VelocityContext;
+import org.eric.services.AuthenticationService;
 
-public class RegistrationService extends BaseService{
+public class RegistrationController extends BaseController{
     
-    public RegistrationService(BasicDataSource datasource){
-        super(datasource);
+    protected final AuthenticationService authenticationService;
+    public RegistrationController(AuthenticationService authenticationService){
+        super();
+        
+        this.authenticationService = authenticationService;
     }
     
     public String showRegistrationPage(){
@@ -24,12 +27,11 @@ public class RegistrationService extends BaseService{
     
     public String processRegistration(String username, String password){
         Map<String, String> map = new HashMap<>();
-        AuthenticationService svc = new AuthenticationService(datasource);
         
-        if(!svc.validateUsername(username)){
+        if(!authenticationService.validateUsername(username)){
             return "This email has already been registered.";
             
-        }else if(!svc.registerUser(username, password)){
+        }else if(!authenticationService.registerUser(username, password)){
             return "There was an error registereing. Please try again.";
         }
         

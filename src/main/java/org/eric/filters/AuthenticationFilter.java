@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.eric.services.AuthenticationService;
+import org.eric.services.UserService;
 
 /**
  * Master authentication filter
@@ -39,7 +40,10 @@ public class AuthenticationFilter implements Filter{
         //Instantiate authentication service
         BasicDataSource datasource = (BasicDataSource) request.getServletContext()
                                         .getAttribute("datasource");
-        AuthenticationService svc = new AuthenticationService(datasource);
+        UserService userService = 
+                new UserService(datasource);
+        AuthenticationService authenticationService = 
+                new AuthenticationService(datasource, userService);
         
         if(route.equals("") || whitelist.contains(route)){
             
@@ -57,7 +61,7 @@ public class AuthenticationFilter implements Filter{
                 }
             }
             //Token valid
-            if(svc.validateToken(token)){
+            if(authenticationService.validateToken(token)){
                 chain.doFilter(request, response);
                 
             //token not valid, log out

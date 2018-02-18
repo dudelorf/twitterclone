@@ -2,7 +2,6 @@ package org.eric.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -11,23 +10,33 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.eric.services.AuthenticationService;
-import org.eric.services.LoginService;
+import org.eric.controllers.LoginController;
+import org.eric.services.UserService;
 
 public class LoginServlet extends HttpServlet{
 
     static final long serialVersionUID = 1;
     
+    protected LoginController getController(BasicDataSource datasource){
+        UserService userService = 
+                new UserService(datasource);
+        AuthenticationService authenticationService = 
+                new AuthenticationService(datasource, userService);
+        
+        return new LoginController(authenticationService);
+    }
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException{
+        
+        BasicDataSource datasource = (BasicDataSource) request.getServletContext()
+                                            .getAttribute("datasource");
+        LoginController controller = getController(datasource);
+        
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        
-        BasicDataSource datasource = (BasicDataSource) getServletContext()
-                                        .getAttribute("datasource");
-        LoginService svc = new LoginService(datasource);
-
-        out.print(svc.getLoginPage());
+        out.print(controller.getLoginPage());
     }
     
     /**
@@ -50,11 +59,11 @@ public class LoginServlet extends HttpServlet{
 
         BasicDataSource datasource = (BasicDataSource) request.getServletContext()
                                             .getAttribute("datasource");
-
-        AuthenticationService svc = new AuthenticationService(datasource);
-        if(svc.validateCredentials(username, password)){
+        LoginController controller = getController(datasource);
+        
+        if(controller.validateLogin(username, password)){
             //login successful
-            String token = svc.loginUser(username);
+            String token = controller.loginUser(username);
             Cookie authCookie = new Cookie("token", token);
             response.addCookie(authCookie);
             
@@ -62,11 +71,8 @@ public class LoginServlet extends HttpServlet{
         }else{            
             //Show login error
             response.setContentType("text/html");
-            PrintWriter out = response.getWriter();
-            
-            LoginService loginSvc = new LoginService(datasource);
-
-            out.print(loginSvc.getLoginErrorPage());
+            PrintWriter out = response.getWriter();            
+            out.print(controller.getLoginErrorPage());
         }
     }
 }

@@ -23,21 +23,6 @@ public class BaseService {
         
         return datasource.getConnection();
     }
-
-    /**
-     * Renders the view
-     * 
-     * @param context data to render into template
-     * @param templateFile path to template
-     */
-    public String renderView(VelocityContext context, String templateFile){
-        StringWriter writer = new StringWriter();
-        
-        Template tpl = Velocity.getTemplate(templateFile);
-        tpl.merge(context, writer);
-
-        return writer.toString();
-    }
     
     /**
      * Executes the query

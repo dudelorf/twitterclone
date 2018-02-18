@@ -12,8 +12,11 @@ import org.eric.models.User;
 
 public class AuthenticationService extends BaseService{
     
-    public AuthenticationService(BasicDataSource datasource){
+    protected UserService userService;
+    
+    public AuthenticationService(BasicDataSource datasource, UserService userService){
         super(datasource);
+        this.userService = userService;
     }
 
     public String encryptPassword(String password, String salt) {
@@ -51,23 +54,20 @@ public class AuthenticationService extends BaseService{
     }
     
     public boolean validateCredentials(String username, String password){
-        UserService svc = new UserService(datasource);
-        User currentUser = svc.loadByUsername(username);
+        User currentUser = userService.loadByUsername(username);
         String salt = currentUser.getSalt();
         return encryptPassword(password, salt).equals(currentUser.getPassword());
     }
     
     public String loginUser(String username){
-        UserService svc = new UserService(datasource);
-        
-        User currentUser = svc.loadByUsername(username);
+        User currentUser = userService.loadByUsername(username);
         String token = generateToken();
         Timestamp tokenExp = generateTokenExpiration();
         
         currentUser.setToken(token);
         currentUser.setToken_expiration(tokenExp);
         
-        svc.saveUser(currentUser);
+        userService.saveUser(currentUser);
         
         return token;
     }
@@ -81,15 +81,13 @@ public class AuthenticationService extends BaseService{
         newUser.setSalt(salt);
         newUser.setPassword(encryptedPass);
         
-        UserService svc = new UserService(datasource);
-        return svc.saveUser(newUser);
+        return userService.saveUser(newUser);
     }
     
     public boolean validateToken(String token){
         boolean valid = false;
         
-        UserService svc = new UserService(datasource);
-        User theUser = svc.loadByToken(token);
+        User theUser = userService.loadByToken(token);
         Timestamp tokenExp = theUser.getToken_expiration();
         if(tokenExp == null){
             valid = false;
@@ -101,8 +99,8 @@ public class AuthenticationService extends BaseService{
     }
     
     public boolean validateUsername(String username){
-        UserService svc = new UserService(datasource);
-        if(svc.loadByUsername(username).getUsername().equals("")){
+        User user = userService.loadByUsername(username);
+        if(user.getUsername().equals("")){
             return true;
         }else{
             return false;

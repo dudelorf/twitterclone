@@ -7,11 +7,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.dbcp.BasicDataSource;
-import org.eric.services.RegistrationService;
+import org.eric.controllers.RegistrationController;
+import org.eric.services.AuthenticationService;
+import org.eric.services.UserService;
 
 public class RegistrationServlet extends HttpServlet{
     
     static final long serialVersionUID = 1;
+    
+    protected RegistrationController getController(BasicDataSource datasource){
+        UserService userService = 
+                new UserService(datasource);
+        AuthenticationService authenticationService = 
+                new AuthenticationService(datasource, userService);
+        
+        return new RegistrationController(authenticationService);
+    }
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -21,9 +32,9 @@ public class RegistrationServlet extends HttpServlet{
         
         BasicDataSource datasource = (BasicDataSource) request.getServletContext()
                                             .getAttribute("datasource");
+        RegistrationController controller = getController(datasource);
         
-        RegistrationService svc = new RegistrationService(datasource);
-        out.print(svc.showRegistrationPage());
+        out.print(controller.showRegistrationPage());
     }
     
     @Override
@@ -40,15 +51,14 @@ public class RegistrationServlet extends HttpServlet{
         
         BasicDataSource datasource = (BasicDataSource) request.getServletContext()
                                             .getAttribute("datasource");
-        RegistrationService svc = new RegistrationService(datasource);
+        RegistrationController controller = getController(datasource);
         
         //Attempt to register user
-        String error = svc.processRegistration(username, password);
+        String error = controller.processRegistration(username, password);
         if(error == null){
-            System.out.println("saved");
             request.getRequestDispatcher("/login").forward(request, response);
         }else{
-            out.print(svc.showRegistrationErrors(error));
+            out.print(controller.showRegistrationErrors(error));
         }
         
     }

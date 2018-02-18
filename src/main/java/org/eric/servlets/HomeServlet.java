@@ -9,12 +9,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.dbcp.BasicDataSource;
-import org.eric.services.HomeService;
+import org.eric.controllers.HomeController;
+import org.eric.services.UserService;
 
 public class HomeServlet extends HttpServlet {
     
     static final long serialVersionUID = 1;
 
+    protected HomeController getController(BasicDataSource datasource){
+        UserService userService = new UserService(datasource);
+        
+        return new HomeController(userService);
+    }
+    
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException{
@@ -23,10 +30,10 @@ public class HomeServlet extends HttpServlet {
         BasicDataSource datasource = (BasicDataSource) getServletContext()
                                         .getAttribute("datasource");                                
         
-        HomeService svc = new HomeService(datasource);
-        PrintWriter out = response.getWriter();
+        HomeController controller = getController(datasource);
         
-        out.print(svc.getHomePage(1));
+        PrintWriter out = response.getWriter();
+        out.print(controller.getHomePage(1));
     }
 
 }
