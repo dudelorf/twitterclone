@@ -100,10 +100,6 @@ public class AuthenticationService extends BaseService{
     
     public boolean validateUsername(String username){
         User user = userService.loadByUsername(username);
-        if(user.getUsername().equals("")){
-            return true;
-        }else{
-            return false;
-        }
+        return user.getUsername().equals("");
     }
 }

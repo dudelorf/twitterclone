@@ -58,16 +58,13 @@ public class UserService extends BaseService{
                 + " token_expiration = ? "
                 + " WHERE id = ? ";
         
-        if(update(sql, theUser.getUsername(),
-                       theUser.getPassword(), 
-                       theUser.getSalt(),
-                       theUser.getToken(),
-                       theUser.getToken_expiration(),
-                       theUser.getId()) != -1){
-            return true;
-        }else{
-            return false;
-        }
+        return update(sql, theUser.getUsername(),
+                           theUser.getPassword(),
+                           theUser.getSalt(),
+                           theUser.getToken(),
+                           theUser.getToken_expiration(),
+                           theUser.getId()
+                      ) != -1;
     }
     
     protected boolean saveNewUser(User theUser){
@@ -78,12 +75,9 @@ public class UserService extends BaseService{
                    + "VALUES"
                    + "(?, ?, ?)";
         
-        if(update(sql, theUser.getUsername(),
-                       theUser.getPassword(), 
-                       theUser.getSalt()) != -1){
-            return true;
-        }else{
-            return false;
-        }
+        return update(sql, theUser.getUsername(),
+                           theUser.getPassword(),
+                           theUser.getSalt()
+                     ) != -1;
     }
 }

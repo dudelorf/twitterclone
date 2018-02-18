@@ -6,7 +6,6 @@ import javax.servlet.ServletContextListener;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.velocity.app.Velocity;
-import org.eric.app.Config;
 
 public class App implements ServletContextListener {
     
@@ -15,13 +14,13 @@ public class App implements ServletContextListener {
      */
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+        Config config = Config.getInstance();
+        
+        initVelocity(config);
+        
         ServletContext ctx = sce.getServletContext();
         
-        Config config = Config.getInstance();
-
-        initVelocity(config);
         BasicDataSource dbpool = initDatasource(config);
-
         ctx.setAttribute("datasource", dbpool);
     }
     

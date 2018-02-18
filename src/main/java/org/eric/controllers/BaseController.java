@@ -6,7 +6,6 @@
 package org.eric.controllers;
 
 import java.io.StringWriter;
-import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
