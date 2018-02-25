@@ -1,7 +1,5 @@
 package org.eric.controllers;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.apache.velocity.VelocityContext;
 import org.eric.services.AuthenticationService;
 
@@ -26,8 +24,6 @@ public class RegistrationController extends BaseController{
     }
     
     public String processRegistration(String username, String password){
-        Map<String, String> map = new HashMap<>();
-        
         if(!authenticationService.validateUsername(username)){
             return "This email has already been registered.";
             
