@@ -29,7 +29,7 @@ public class AuthenticationFilter implements Filter{
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
         throws IOException, ServletException {
-        
+
         HttpServletRequest httpReq = (HttpServletRequest) request;
         HttpServletResponse httpResp = (HttpServletResponse) response;
         
@@ -37,6 +37,12 @@ public class AuthenticationFilter implements Filter{
         List<String> whitelist = Config.getInstance().getWhitelistRoutes();
         String route = httpReq.getRequestURI().substring(1); //remove leading '/'
         
+        //Don't worry about public resources
+        if(route.startsWith("js") || route.startsWith("css") || route.startsWith("node_modules")){
+            chain.doFilter(request, response);
+            return;
+        }
+
         //Instantiate authentication service
         BasicDataSource datasource = (BasicDataSource) request.getServletContext()
                                         .getAttribute("datasource");
@@ -47,22 +53,25 @@ public class AuthenticationFilter implements Filter{
         
         if(!route.equals("") && !whitelist.contains(route)){
             
-            String token = "";
             Cookie[] cookies = httpReq.getCookies();
-            if(cookies == null){
-                token = "";
-            }else{
+            Cookie tokenCookie = null;
+            if(cookies != null){
                 for(Cookie c : cookies){
                     if(c.getName().equals("token")){
-                        token = c.getValue();
+                        tokenCookie = c;
                     }
                 }
             }
+
+            if(tokenCookie == null){
+                tokenCookie = new Cookie("token", "");
+                tokenCookie.setPath("/");
+                httpResp.addCookie(tokenCookie);
+            }
+
             //token not valid, log out
-            if(!authenticationService.validateToken(token)){
-                Cookie expiredToken = new Cookie("token", "");
-                expiredToken.setMaxAge(-1);
-                httpResp.addCookie(expiredToken);
+            if(!authenticationService.validateToken(tokenCookie.getValue())){
+                tokenCookie.setMaxAge(-1);
                 httpResp.sendRedirect("/");
                 return;
             }

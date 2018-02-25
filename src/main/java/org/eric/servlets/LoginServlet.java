@@ -65,6 +65,8 @@ public class LoginServlet extends HttpServlet{
             //login successful
             String token = controller.loginUser(username);
             Cookie authCookie = new Cookie("token", token);
+            authCookie.setPath("/");
+            authCookie.setMaxAge(24 * 60 * 60);
             response.addCookie(authCookie);
             
             response.sendRedirect("/home");
