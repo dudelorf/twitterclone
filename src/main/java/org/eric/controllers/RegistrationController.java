@@ -28,7 +28,7 @@ public class RegistrationController extends BaseController{
             return "This email has already been registered.";
             
         }else if(!authenticationService.registerUser(username, password)){
-            return "There was an error registereing. Please try again.";
+            return "There was an error registering. Please try again.";
         }
         
         return null;

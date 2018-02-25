@@ -34,7 +34,7 @@ public class BaseService {
     public <T> T query(ResultSetHandler<T> handler, String sql, Object ... params){
         try{
             QueryRunner runner = new QueryRunner(datasource);
-            return runner.query(sql, params, handler);
+            return runner.query(sql, handler, params);
         }catch(SQLException exc){
             exc.printStackTrace();
             return null;
