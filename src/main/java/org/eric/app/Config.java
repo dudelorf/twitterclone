@@ -1,6 +1,7 @@
 package org.eric.app;
 
 import java.net.URL;
+import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
@@ -31,11 +32,31 @@ public class Config {
         instance = config;
     }
 
+    /**
+     * Loads the applicaiton properties file
+     * 
+     * Looks for System property 'appenv' to know which file to load
+     *  -Dappenv=production
+     * 
+     * @param config fresh config instace to populate
+     */
     private static void loadProperties(Config config){
         try{
+            String appenv = System.getProperty("appenv");
+            String propertiesFile = "";
+
+            //Load production properties
+            if(appenv != null && appenv.equals("production")){
+                propertiesFile = "production.properties";
+            //Load dev properties
+            }else{
+                propertiesFile = "application.properties";
+            }
+
             config.props.load(Thread.currentThread()
                 .getContextClassLoader()
-                .getResourceAsStream("application.properties"));
+                .getResourceAsStream(propertiesFile));
+                
         }catch(Exception exc){
             System.out.println(exc.getMessage());
             exc.printStackTrace();

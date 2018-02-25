@@ -45,10 +45,8 @@ public class AuthenticationFilter implements Filter{
         AuthenticationService authenticationService = 
                 new AuthenticationService(datasource, userService);
         
-        if(route.equals("") || whitelist.contains(route)){
+        if(!route.equals("") && !whitelist.contains(route)){
             
-            chain.doFilter(request, response);
-        }else{
             String token = "";
             Cookie[] cookies = httpReq.getCookies();
             if(cookies == null){
@@ -60,19 +58,16 @@ public class AuthenticationFilter implements Filter{
                     }
                 }
             }
-            //Token valid
-            if(authenticationService.validateToken(token)){
-                chain.doFilter(request, response);
-                
             //token not valid, log out
-            }else{
+            if(!authenticationService.validateToken(token)){
                 Cookie expiredToken = new Cookie("token", "");
                 expiredToken.setMaxAge(-1);
                 httpResp.addCookie(expiredToken);
                 httpResp.sendRedirect("/");
-                chain.doFilter(request, response);
+                return;
             }
         }
+        chain.doFilter(request, response);
     }
 
     @Override
