@@ -14,11 +14,12 @@ public class App implements ServletContextListener {
      */
     @Override
     public void contextInitialized(ServletContextEvent sce) {
+        ServletContext ctx = sce.getServletContext();
+        
         Config config = Config.getInstance();
         
-        initVelocity(config);
-        
-        ServletContext ctx = sce.getServletContext();
+        String templateDir = ctx.getRealPath("/");
+        initVelocity(templateDir);
         
         BasicDataSource dbpool = initDatasource(config);
         ctx.setAttribute("datasource", dbpool);
@@ -26,9 +27,10 @@ public class App implements ServletContextListener {
     
     /**
      * Loads velocity singleton
+     * 
+     * @param templateDir base directory to load velocicty templates
      */
-    private void initVelocity(Config config){
-        String templateDir = config.getTemplateDir();
+    private void initVelocity(String templateDir){  System.out.println(templateDir);
         Velocity.setProperty("file.resource.loader.path", templateDir);
         Velocity.init();
     }

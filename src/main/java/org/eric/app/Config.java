@@ -1,6 +1,5 @@
 package org.eric.app;
 
-import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
@@ -25,8 +24,6 @@ public class Config {
         
         //load properties file
         loadProperties(config);
-        String templateDir = getTemlateDirPath();
-        config.props.put("template.dir", templateDir);
 
         instance = config;
     }
@@ -49,7 +46,7 @@ public class Config {
                 propertiesFile = "production.properties";
             //Load dev properties
             }else{
-                propertiesFile = "application.properties";
+                propertiesFile = "dev.properties";
             }
 
             config.props.load(Thread.currentThread()
@@ -61,13 +58,6 @@ public class Config {
             exc.printStackTrace();
             throw new RuntimeException("Unable to load properties file!", exc);
         }
-    }
-
-    private static String getTemlateDirPath(){
-        URL resource = Thread.currentThread()
-                             .getContextClassLoader()
-                             .getResource("/");
-        return resource.getPath();
     }
 
     public String getDbDriver(){
@@ -88,10 +78,6 @@ public class Config {
 
     public int getInitialDbPoolSize(){
         return Integer.valueOf(props.getProperty("inital.dbpool.size"));
-    }
-
-    public String getTemplateDir(){
-        return props.getProperty("template.dir");
     }
     
     public List<String> getWhitelistRoutes(){
