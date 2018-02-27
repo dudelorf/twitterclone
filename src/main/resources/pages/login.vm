@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <head>
     <title>Login page</title>
-    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/css/styles.css" />
-    <script type="text/javascript" src="/node_modules/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/resources/node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/resources/css/styles.css" />
+    <script type="text/javascript" src="/resources/node_modules/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/resources/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 <body>
     <h1>Login page</h1>
