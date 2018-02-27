@@ -37,8 +37,8 @@ public class AuthenticationFilter implements Filter{
         List<String> whitelist = Config.getInstance().getWhitelistRoutes();
         String route = httpReq.getRequestURI().substring(1); //remove leading '/'
         
-        //Don't worry about public resources
-        if(route.startsWith("js") || route.startsWith("css") || route.startsWith("node_modules")){
+        //Don't worry about webapp resources
+        if(route.startsWith("resources")){
             chain.doFilter(request, response);
             return;
         }
