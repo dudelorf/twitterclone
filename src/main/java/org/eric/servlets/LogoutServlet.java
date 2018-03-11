@@ -28,12 +28,9 @@ public class LogoutServlet extends HttpServlet {
         }
 
         if(tokenCookie != null){
-            System.out.println("found token cookie");
             tokenCookie.setMaxAge(0);
             tokenCookie.setValue("");
             response.addCookie(tokenCookie);
-        }else{
-            System.out.println("token cookie not found");
         }
         
         response.sendRedirect("/");

@@ -1,6 +1,7 @@
 package org.eric.filters;
 
 import org.eric.app.Config;
+import org.eric.models.User;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.Filter;
@@ -75,6 +76,10 @@ public class AuthenticationFilter implements Filter{
                 httpResp.addCookie(tokenCookie);
                 httpResp.sendRedirect("/");
                 return;
+            }else{
+                //store current user
+                User currentUser = userService.loadByToken(tokenCookie.getValue());
+                httpReq.setAttribute("user", currentUser);
             }
         }
         chain.doFilter(request, response);
