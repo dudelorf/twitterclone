@@ -7,6 +7,9 @@
     <script type="text/javascript" src="/resources/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 <body>
+    <nav>
+        <a href="/logout">Logout</a>
+    </nav>
     <h1>Welcome, dude</h1>
     
 </body>

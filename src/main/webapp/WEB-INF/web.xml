@@ -35,6 +35,14 @@
         <servlet-name>registration</servlet-name>
         <url-pattern>/registration</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>logout</servlet-name>
+        <servlet-class>org.eric.servlets.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
     <filter>
         <filter-name>Authentication Filter</filter-name>
         <filter-class>org.eric.filters.AuthenticationFilter</filter-class>

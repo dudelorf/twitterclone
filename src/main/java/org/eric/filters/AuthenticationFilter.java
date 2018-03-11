@@ -71,7 +71,8 @@ public class AuthenticationFilter implements Filter{
 
             //token not valid, log out
             if(!authenticationService.validateToken(tokenCookie.getValue())){
-                tokenCookie.setMaxAge(-1);
+                tokenCookie.setMaxAge(0);
+                httpResp.addCookie(tokenCookie);
                 httpResp.sendRedirect("/");
                 return;
             }
