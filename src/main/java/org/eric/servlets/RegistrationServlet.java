@@ -47,14 +47,18 @@ public class RegistrationServlet extends HttpServlet{
         //Gather registration form data
         String username = (String) request.getParameter("username");
         String password = (String) request.getParameter("password");
-
+        String firstname = (String) request.getParameter("firstname");
+        String lastname = (String) request.getParameter("lastname");
         
         BasicDataSource datasource = (BasicDataSource) request.getServletContext()
                                             .getAttribute("datasource");
         RegistrationController controller = getController(datasource);
         
         //Attempt to register user
-        String error = controller.processRegistration(username, password);
+        String error = controller.processRegistration(username, 
+                                                      password,
+                                                      firstname,
+                                                      lastname);
         if(error == null){
             request.getRequestDispatcher("/login").forward(request, response);
         }else{

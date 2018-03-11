@@ -25,6 +25,21 @@ public class UserService extends BaseService{
             return theUser;
         }
     }
+
+    public User loadById(int id){
+        ResultSetHandler<User> handler = new BeanHandler<>(User.class);
+
+        String sql = "SELECT * "
+                   + "FROM users "
+                   + "WHERE id = ? ";
+
+        User theUser = query(handler, sql, id);
+        if(theUser == null){
+            return new User();
+        }else{
+            return theUser;
+        }
+    }
     
     public User loadByToken(String token){
         ResultSetHandler<User> handler = new BeanHandler<>(User.class);
@@ -52,6 +67,8 @@ public class UserService extends BaseService{
     protected boolean updateUser(User theUser){
         String sql = "UPDATE users SET "
                 + " username = ?, "
+                + " firstname = ?, "
+                + " lastname = ?, "
                 + " password = ?, "
                 + " salt = ?, "
                 + " token = ?, "
@@ -59,6 +76,8 @@ public class UserService extends BaseService{
                 + " WHERE id = ? ";
         
         return update(sql, theUser.getUsername(),
+                           theUser.getFirstname(),
+                           theUser.getLastname(),
                            theUser.getPassword(),
                            theUser.getSalt(),
                            theUser.getToken(),
@@ -68,14 +87,20 @@ public class UserService extends BaseService{
     }
     
     protected boolean saveNewUser(User theUser){
-        String sql = "INSERT INTO users"
-                   + "(username,"
-                   + "password,"
-                   + "salt)"
-                   + "VALUES"
-                   + "(?, ?, ?)";
+        String sql = "INSERT INTO users "
+                   + "( "
+                   + " username, "
+                   + " firstname, "
+                   + " lastname, "
+                   + " password, "
+                   + " salt "
+                   + ") " 
+                   + " VALUES "
+                   + "(?, ?, ?, ?, ?)";
         
         return update(sql, theUser.getUsername(),
+                           theUser.getFirstname(),
+                           theUser.getLastname(),
                            theUser.getPassword(),
                            theUser.getSalt()
                      ) != -1;

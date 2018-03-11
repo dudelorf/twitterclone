@@ -72,13 +72,20 @@ public class AuthenticationService extends BaseService{
         return token;
     }
     
-    public boolean registerUser(String username, String password){
-        String salt = generateSalt();
-        String encryptedPass = encryptPassword(password, salt);
-        
+    public boolean registerUser(String username, 
+                                String password,
+                                String firstname,
+                                String lastname){
         User newUser = new User();
+
         newUser.setUsername(username);
+        newUser.setFirstname(firstname);
+        newUser.setLastname(lastname);
+        
+        String salt = generateSalt();
         newUser.setSalt(salt);
+
+        String encryptedPass = encryptPassword(password, salt);
         newUser.setPassword(encryptedPass);
         
         return userService.saveUser(newUser);
