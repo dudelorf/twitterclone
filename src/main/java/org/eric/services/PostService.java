@@ -23,12 +23,14 @@ public class PostService extends BaseService{
         return post;
     }
     
-    public List<Post> getUserPosts(int userId){
+    public List<Post> getUserPosts(int userId, int offset){
         return new ArrayList<>();
     }
     
     public List<Post> getNewPosts(int userId){
-        return new ArrayList<>();
+        List<Post> posts = new ArrayList<>();
+        posts.add(new Post());
+        return posts;
     }
     
 }

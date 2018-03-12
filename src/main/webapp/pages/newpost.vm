@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <head>
-    <title>twitter clone</title>
+    <title>New Post</title>
     <link rel="stylesheet" href="/resources/node_modules/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/resources/css/styles.css" />
     <script type="text/javascript" src="/resources/node_modules/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="/resources/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <nav>
-        <a href="/logout">Logout</a>
-    </nav>
-    <h1>Welcome, $user.getFirstname() $user.getLastname()</h1>
-    
-    #if($posts.size())
-    <p>Sweet, there are posts!</p>
-    #else
-    <p>There are no new posts to display</p>
-    #end
+    <h1>Create a new post</h1>
+    <form action="/post/new" method="POST">
+
+
+        <button type="submit">Post it!</button>
+    </form>
 </body>
