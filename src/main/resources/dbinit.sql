@@ -22,3 +22,11 @@ create table posts (
     post_date DATETIME
 );
 ALTER TABLE posts ADD INDEX post_date (post_date);
+
+drop table if exists subscriptions;
+create table subscriptions (
+    id int PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    subscriber_id int NOT NULL,
+    poster_id int NOT NULL
+);
+ALTER TABLE subscriptions ADD INDEX subscriber_id (subscriber_id);

@@ -66,14 +66,14 @@ public class UserService extends BaseService{
     
     protected boolean updateUser(User theUser){
         String sql = "UPDATE users SET "
-                + " username = ?, "
-                + " firstname = ?, "
-                + " lastname = ?, "
-                + " password = ?, "
-                + " salt = ?, "
-                + " token = ?, "
-                + " token_expiration = ? "
-                + " WHERE id = ? ";
+                   + " username = ?, "
+                   + " firstname = ?, "
+                   + " lastname = ?, "
+                   + " password = ?, "
+                   + " salt = ?, "
+                   + " token = ?, "
+                   + " token_expiration = ? "
+                   + " WHERE id = ? ";
         
         return update(sql, theUser.getUsername(),
                            theUser.getFirstname(),

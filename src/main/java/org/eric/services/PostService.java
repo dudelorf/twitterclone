@@ -2,13 +2,19 @@ package org.eric.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.apache.commons.dbcp.BasicDataSource;
 import org.eric.models.Post;
+import org.eric.models.Subscription;
 
 public class PostService extends BaseService{
 
-    public PostService(BasicDataSource datasource) {
+    private SubscriptionService subscriptionService;
+
+    public PostService(BasicDataSource datasource, SubscriptionService subscriptionService) {
         super(datasource);
+        this.subscriptionService = subscriptionService;
     }
     
     public Post getPost(int postId){
@@ -28,8 +34,15 @@ public class PostService extends BaseService{
     }
     
     public List<Post> getNewPosts(int userId){
-        List<Post> posts = new ArrayList<>();
-        posts.add(new Post());
+        List<Subscription> subscriptions = subscriptionService.getSubscriptions(userId);
+
+        List<Post> posts = subscriptions.stream()
+                            .map((s) -> {
+                                Post p = new Post();
+                                p.setPost_body(String.valueOf(s.getPoster_id()));
+                                return p;
+                            }).collect(Collectors.toList());
+
         return posts;
     }
     

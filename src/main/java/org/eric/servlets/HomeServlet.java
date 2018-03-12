@@ -12,6 +12,7 @@ import org.apache.commons.dbcp.BasicDataSource;
 import org.eric.controllers.HomeController;
 import org.eric.models.User;
 import org.eric.services.PostService;
+import org.eric.services.SubscriptionService;
 import org.eric.services.UserService;
 
 public class HomeServlet extends HttpServlet {
@@ -20,7 +21,9 @@ public class HomeServlet extends HttpServlet {
 
     protected HomeController getController(BasicDataSource datasource){
         UserService userService = new UserService(datasource);
-        PostService postService = new PostService(datasource);
+        
+        SubscriptionService subscriptionService = new SubscriptionService(datasource);
+        PostService postService = new PostService(datasource, subscriptionService);
 
         return new HomeController(userService, postService);
     }
