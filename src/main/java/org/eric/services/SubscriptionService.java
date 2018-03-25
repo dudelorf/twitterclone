@@ -23,7 +23,7 @@ public class SubscriptionService extends BaseService{
         
         String sql = "SELECT * " 
                    + "FROM subscriptions "
-                   + "WHERE subscriber_id = ?";
+                   + "WHERE subscriberId = ?";
 
         return query(handler, sql, subscriberId);
     }
@@ -31,8 +31,8 @@ public class SubscriptionService extends BaseService{
     public boolean addSubscription(int subscriberId, int posterId){
         String sql = "INSERT INTO subscriptions "
                    + "( "
-                   + " subscriber_id, "
-                   + " poster_id "
+                   + " subscriberId, "
+                   + " posterId "
                    + ") "
                    + " VALUES "
                    + "(?, ?)";
@@ -44,8 +44,8 @@ public class SubscriptionService extends BaseService{
 
     public boolean removeSubscription(int subscriberId, int posterId){
         String sql = "DELETE FROM subscriptions "
-                   + "WHERE subscriber_id = ? "
-                   + "AND poster_id = ?";
+                   + "WHERE subscriberId = ? "
+                   + "AND posterId = ?";
                    
         return update(sql, subscriberId,
                            posterId

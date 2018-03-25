@@ -36,6 +36,14 @@
         <url-pattern>/registration</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>accountEdit</servlet-name>
+        <servlet-class>org.eric.servlets.AccountServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>accountEdit</servlet-name>
+        <url-pattern>/account</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>logout</servlet-name>
         <servlet-class>org.eric.servlets.LogoutServlet</servlet-class>
     </servlet>

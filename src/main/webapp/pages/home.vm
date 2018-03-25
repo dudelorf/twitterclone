@@ -9,9 +9,17 @@
 <body>
     <nav>
         <a href="/logout">Logout</a>
+        <a href="/account">Account</a>
+        <a href="/posts">Posts</a>
+        <a href="/newpost">New post</a>
     </nav>
     <h1>Welcome, $user.getFirstname() $user.getLastname()</h1>
     
+    <input id="search"
+           type="text"
+           name="search"
+           placeholder="Search for users!"/>
+    <button id="search-submit">Submit</button>
     #if($posts.size())
     <ul>
         #foreach($post in $posts)
