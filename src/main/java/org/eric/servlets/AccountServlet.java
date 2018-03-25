@@ -31,17 +31,26 @@ public class AccountServlet extends HttpServlet{
                                         .getAttribute("datasource");
         
         AccountController accountController = getController(datasource);
+        
         User currentUser = (User) request.getAttribute("user");
+        String message = (String) request.getAttribute("message");
+        if(message == null){
+            message = "";
+        }
         
         response.setContentType("text/html");
         
         PrintWriter out = response.getWriter();
-        out.print(accountController.getAccountEditPage(currentUser));
+        out.print(accountController.getAccountEditPage(currentUser, message));
     }
     
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException{
+        System.out.println("saving all that stuff");
         
+        request.setAttribute("message", "Account updated successfully");
+        
+        doGet(request, response);
     }
 }

@@ -54,16 +54,16 @@ public class LoginServlet extends HttpServlet{
         throws IOException, ServletException{
         
         //Gather registration form data
-        String username = (String) request.getParameter("username");
+        String email = (String) request.getParameter("email");
         String password = (String) request.getParameter("password");
 
         BasicDataSource datasource = (BasicDataSource) request.getServletContext()
                                             .getAttribute("datasource");
         LoginController controller = getController(datasource);
         
-        if(controller.validateLogin(username, password)){
+        if(controller.validateLogin(email, password)){
             //login successful
-            String token = controller.loginUser(username);
+            String token = controller.loginUser(email);
             Cookie authCookie = new Cookie("token", token);
             authCookie.setPath("/");
             authCookie.setMaxAge(24 * 60 * 60);

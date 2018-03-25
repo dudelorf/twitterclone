@@ -53,14 +53,14 @@ public class AuthenticationService extends BaseService{
         return tokenExpiration;
     }
     
-    public boolean validateCredentials(String username, String password){
-        User currentUser = userService.loadByUsername(username);
+    public boolean validateCredentials(String email, String password){
+        User currentUser = userService.loadByEmail(email);
         String salt = currentUser.getSalt();
         return encryptPassword(password, salt).equals(currentUser.getPassword());
     }
     
-    public String loginUser(String username){
-        User currentUser = userService.loadByUsername(username);
+    public String loginUser(String email){
+        User currentUser = userService.loadByEmail(email);
         String token = generateToken();
         Timestamp tokenExp = generateTokenExpiration();
         

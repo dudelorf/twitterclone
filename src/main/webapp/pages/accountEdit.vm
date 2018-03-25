@@ -3,9 +3,13 @@
     <title>Account Edit</title>
 </head>
 <body>
+    <nav>
+        <a href="/home">Home</a>
+    </nav>
     <h1>Edit Your Account</h1>
+    <p>$message</p>
     <form method="POST"
-        action="/account">
+          action="/account">
         <label for="firstname">First name:</label>
         <input type="text" id="firstname" name="firstname" value="$firstname" required/>
         <br/>

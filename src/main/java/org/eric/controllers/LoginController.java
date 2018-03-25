@@ -22,12 +22,12 @@ public class LoginController extends BaseController{
         this.authenticationService = authenticationService;
     }
     
-    public boolean validateLogin(String username, String password){
-        return authenticationService.validateCredentials(username, password);
+    public boolean validateLogin(String email, String password){
+        return authenticationService.validateCredentials(email, password);
     }
     
-    public String loginUser(String username){
-        return authenticationService.loginUser(username);
+    public String loginUser(String email){
+        return authenticationService.loginUser(email);
     }
     
     public String getLoginPage(){

@@ -22,14 +22,17 @@ public class AccountController extends BaseController{
         this.userService = userService;    
     }
     
-    public String getAccountEditPage(User currentUser){
+    public String getAccountEditPage(User currentUser, String message){
         VelocityContext ctx = new VelocityContext();
         
         ctx.put("email", currentUser.getEmail());
         ctx.put("username", currentUser.getUsername());
         ctx.put("firstname", currentUser.getFirstname());
         ctx.put("lastname", currentUser.getLastname());
+        ctx.put("message", message);
         
         return renderView(ctx, "pages/accountEdit.vm");
     }
+    
+    
 }

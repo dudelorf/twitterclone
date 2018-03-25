@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <head>
-    <title>Login page</title>
+    <title>Login to your account</title>
     <link rel="stylesheet" href="/resources/node_modules/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/resources/css/styles.css" />
     <script type="text/javascript" src="/resources/node_modules/jquery/dist/jquery.min.js"></script>
@@ -9,8 +9,8 @@
 <body>
     <h1>Login page</h1>
     <form id="login-form" method="POST" action="/login">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" />
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" />
         <br/>
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" />
