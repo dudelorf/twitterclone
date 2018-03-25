@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <head>
     <title>Account Edit</title>
+    <link rel="stylesheet" href="/resources/node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/resources/css/styles.css" />
 </head>
 <body>
     <nav>
@@ -8,6 +10,7 @@
     </nav>
     <h1>Edit Your Account</h1>
     <p>$message</p>
+    <p>$error</p>
     <form method="POST"
           action="/account">
         <label for="firstname">First name:</label>
@@ -34,4 +37,7 @@
         <br/>
         <button id="submit-btn" type="submit">Save</button>
     </form>
+    
+    <script type="text/javascript" src="/resources/node_modules/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="/resources/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 </body>
