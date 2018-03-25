@@ -45,6 +45,7 @@ public class RegistrationServlet extends HttpServlet{
         PrintWriter out = response.getWriter();
         
         //Gather registration form data
+        String email = (String) request.getParameter("email");
         String username = (String) request.getParameter("username");
         String password = (String) request.getParameter("password");
         String firstname = (String) request.getParameter("firstname");
@@ -55,7 +56,8 @@ public class RegistrationServlet extends HttpServlet{
         RegistrationController controller = getController(datasource);
         
         //Attempt to register user
-        String error = controller.processRegistration(username, 
+        String error = controller.processRegistration(email,
+                                                      username, 
                                                       password,
                                                       firstname,
                                                       lastname);

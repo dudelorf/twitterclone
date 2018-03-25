@@ -29,10 +29,7 @@ public class Config {
     }
 
     /**
-     * Loads the applicaiton properties file
-     * 
-     * Looks for System property 'appenv' to know which file to load
-     *  -Dappenv=production
+     * Loads the application properties file
      * 
      * @param config fresh config instace to populate
      */

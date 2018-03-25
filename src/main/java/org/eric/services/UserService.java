@@ -1,10 +1,6 @@
 package org.eric.services;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.apache.commons.dbcp.BasicDataSource;
-import org.apache.commons.dbutils.BasicRowProcessor;
-import org.apache.commons.dbutils.BeanProcessor;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.eric.models.User;
@@ -15,8 +11,23 @@ public class UserService extends BaseService{
         super(datasource);
     }
     
+    public User loadByEmail(String email){
+        ResultSetHandler<User> handler = new BeanHandler<>(User.class);
+
+        String sql = "SELECT * "
+                   + "FROM users "
+                   + "WHERE email = ? ";
+
+        User theUser = query(handler, sql, email);
+        if(theUser == null){
+            return new User();
+        }else{
+            return theUser;
+        }
+    }
+    
     public User loadByUsername(String username){
-        ResultSetHandler<User> handler = new UserBeanHandler();
+        ResultSetHandler<User> handler = new BeanHandler<>(User.class);
 
         String sql = "SELECT * "
                    + "FROM users "
@@ -31,7 +42,7 @@ public class UserService extends BaseService{
     }
 
     public User loadById(int id){
-        ResultSetHandler<User> handler = new UserBeanHandler();
+        ResultSetHandler<User> handler = new BeanHandler<>(User.class);
 
         String sql = "SELECT * "
                    + "FROM users "
@@ -46,7 +57,7 @@ public class UserService extends BaseService{
     }
     
     public User loadByToken(String token){
-        ResultSetHandler<User> handler = new UserBeanHandler();
+        ResultSetHandler<User> handler = new BeanHandler<>(User.class);
 
         String sql = "SELECT * "
                    + "FROM users "
@@ -70,16 +81,18 @@ public class UserService extends BaseService{
     
     protected boolean updateUser(User theUser){
         String sql = "UPDATE users SET "
+                   + " email = ?, "
                    + " username = ?, "
                    + " firstname = ?, "
                    + " lastname = ?, "
                    + " password = ?, "
                    + " salt = ?, "
                    + " token = ?, "
-                   + " token_expiration = ? "
+                   + " tokenExpiration = ? "
                    + " WHERE id = ? ";
         
-        return update(sql, theUser.getUsername(),
+        return update(sql, theUser.getEmail(),
+                           theUser.getUsername(),
                            theUser.getFirstname(),
                            theUser.getLastname(),
                            theUser.getPassword(),
@@ -93,6 +106,7 @@ public class UserService extends BaseService{
     protected boolean saveNewUser(User theUser){
         String sql = "INSERT INTO users "
                    + "( "
+                   + " email, "
                    + " username, "
                    + " firstname, "
                    + " lastname, "
@@ -100,36 +114,14 @@ public class UserService extends BaseService{
                    + " salt "
                    + ") " 
                    + " VALUES "
-                   + "(?, ?, ?, ?, ?)";
+                   + "(?, ?, ?, ?, ?, ?)";
         
-        return update(sql, theUser.getUsername(),
+        return update(sql, theUser.getEmail(),
+                           theUser.getUsername(),
                            theUser.getFirstname(),
                            theUser.getLastname(),
                            theUser.getPassword(),
                            theUser.getSalt()
                      ) != -1;
     }
-}
-
-/**
- * Bean handler for User models
- */
-class UserBeanHandler extends BeanHandler<User>{
-    
-    public UserBeanHandler() {
-        super(User.class,
-              new BasicRowProcessor(new BeanProcessor(getColumnsToFieldsMap())));
-    }
-
-    /**
-     * Provides mapping from database fields to User model fields
-     * 
-     * @return field mappings
-     */
-    public static Map<String, String> getColumnsToFieldsMap(){
-        Map<String, String> fieldsMap = new HashMap<>();
-        fieldsMap.put("token_expiration", "tokenExpiration");
-        return fieldsMap;
-    }
-        
 }

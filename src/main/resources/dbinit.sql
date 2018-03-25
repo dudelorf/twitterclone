@@ -1,6 +1,6 @@
--- drop database twitterclone;
--- create database twitterclone;
--- use twitterclone;
+drop database if exists twitterclone;
+create database twitterclone;
+use twitterclone;
 
 drop table if exists users;
 create table users (
@@ -8,25 +8,29 @@ create table users (
     firstname VARCHAR(128) NOT NULL,
     lastname VARCHAR(128) NOT NULL,
     username VARCHAR(128) NOT NULL,
+    email VARCHAR(128) NOT NULL,
     password VARCHAR(128) NOT NULL,
     salt VARCHAR(64) NOT NULL,
     token VARCHAR(64),
-    token_expiration DATETIME
+    tokenExpiration DATETIME
 );
+ALTER TABLE users ADD INDEX username (username);
+ALTER TABLE users ADD INDEX email (email);
+ALTER TABLE users ADD INDEX token (token);
 
 drop table if exists posts;
 create table posts (
     id int PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    user_id int NOT NULL,
-    post_body TEXT,
-    post_date DATETIME
+    userId int NOT NULL,
+    postBody TEXT,
+    postDate DATETIME
 );
-ALTER TABLE posts ADD INDEX post_date (post_date);
+ALTER TABLE posts ADD INDEX postDate (postDate);
 
 drop table if exists subscriptions;
 create table subscriptions (
     id int PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    subscriber_id int NOT NULL,
-    poster_id int NOT NULL
+    subscriberId int NOT NULL,
+    posterId int NOT NULL
 );
-ALTER TABLE subscriptions ADD INDEX subscriber_id (subscriber_id);
+ALTER TABLE subscriptions ADD INDEX subscriberId (subscriberId);

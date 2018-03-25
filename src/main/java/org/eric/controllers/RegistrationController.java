@@ -23,14 +23,19 @@ public class RegistrationController extends BaseController{
         return renderView(ctx, "pages/registration.vm");
     }
     
-    public String processRegistration(String username,
+    public String processRegistration(String email,
+                                      String username,
                                       String password,
                                       String firstname,
                                       String lastname){
         if(!authenticationService.validateUsername(username)){
             return "This email has already been registered.";
             
-        }else if(!authenticationService.registerUser(username, 
+        }else if(!authenticationService.validateEmail(email)){
+            return "This username has already been registered.";
+            
+        }else if(!authenticationService.registerUser(email,
+                                                     username, 
                                                      password,
                                                      firstname,
                                                      lastname)){

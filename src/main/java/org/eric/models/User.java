@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 public class User {
 
     private int id = -1;
+    private String email = "";
     private String username = "";
     private String firstname = "";
     private String lastname = "";
@@ -12,6 +13,14 @@ public class User {
     private String password = "";
     private String token = "";
     private Timestamp tokenExpiration = null;
+    
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
     
     public String getUsername() {
         return username;

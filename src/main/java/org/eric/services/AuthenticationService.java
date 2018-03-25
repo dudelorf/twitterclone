@@ -72,12 +72,14 @@ public class AuthenticationService extends BaseService{
         return token;
     }
     
-    public boolean registerUser(String username, 
+    public boolean registerUser(String email,
+                                String username, 
                                 String password,
                                 String firstname,
                                 String lastname){
         User newUser = new User();
 
+        newUser.setEmail(email);
         newUser.setUsername(username);
         newUser.setFirstname(firstname);
         newUser.setLastname(lastname);
@@ -108,5 +110,10 @@ public class AuthenticationService extends BaseService{
     public boolean validateUsername(String username){
         User user = userService.loadByUsername(username);
         return user.getUsername().equals("");
+    }
+    
+    public boolean validateEmail(String email){
+        User user = userService.loadByEmail(email);
+        return user.getEmail().equals("");
     }
 }
