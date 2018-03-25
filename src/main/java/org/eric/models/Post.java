@@ -8,27 +8,27 @@ public class Post {
     private String post_body;
     private Timestamp post_date;
 
-    public int getUser_id() {
+    public int getUserId() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUserId(int user_id) {
         this.user_id = user_id;
     }
 
-    public String getPost_body() {
+    public String getPostBody() {
         return post_body;
     }
 
-    public void setPost_body(String post_body) {
+    public void setPostBody(String post_body) {
         this.post_body = post_body;
     }
 
-    public Timestamp getPost_date() {
+    public Timestamp getPostDate() {
         return post_date;
     }
 
-    public void setPost_date(Timestamp post_date) {
+    public void setPostDate(Timestamp post_date) {
         this.post_date = post_date;
     }
     

@@ -1,6 +1,10 @@
 package org.eric.services;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.commons.dbutils.BasicRowProcessor;
+import org.apache.commons.dbutils.BeanProcessor;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.eric.models.User;
@@ -12,7 +16,7 @@ public class UserService extends BaseService{
     }
     
     public User loadByUsername(String username){
-        ResultSetHandler<User> handler = new BeanHandler<>(User.class);
+        ResultSetHandler<User> handler = new UserBeanHandler();
 
         String sql = "SELECT * "
                    + "FROM users "
@@ -27,7 +31,7 @@ public class UserService extends BaseService{
     }
 
     public User loadById(int id){
-        ResultSetHandler<User> handler = new BeanHandler<>(User.class);
+        ResultSetHandler<User> handler = new UserBeanHandler();
 
         String sql = "SELECT * "
                    + "FROM users "
@@ -42,7 +46,7 @@ public class UserService extends BaseService{
     }
     
     public User loadByToken(String token){
-        ResultSetHandler<User> handler = new BeanHandler<>(User.class);
+        ResultSetHandler<User> handler = new UserBeanHandler();
 
         String sql = "SELECT * "
                    + "FROM users "
@@ -81,7 +85,7 @@ public class UserService extends BaseService{
                            theUser.getPassword(),
                            theUser.getSalt(),
                            theUser.getToken(),
-                           theUser.getToken_expiration(),
+                           theUser.getTokenExpiration(),
                            theUser.getId()
                       ) != -1;
     }
@@ -105,4 +109,27 @@ public class UserService extends BaseService{
                            theUser.getSalt()
                      ) != -1;
     }
+}
+
+/**
+ * Bean handler for User models
+ */
+class UserBeanHandler extends BeanHandler<User>{
+    
+    public UserBeanHandler() {
+        super(User.class,
+              new BasicRowProcessor(new BeanProcessor(getColumnsToFieldsMap())));
+    }
+
+    /**
+     * Provides mapping from database fields to User model fields
+     * 
+     * @return field mappings
+     */
+    public static Map<String, String> getColumnsToFieldsMap(){
+        Map<String, String> fieldsMap = new HashMap<>();
+        fieldsMap.put("token_expiration", "tokenExpiration");
+        return fieldsMap;
+    }
+        
 }

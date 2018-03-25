@@ -39,7 +39,7 @@ public class PostService extends BaseService{
         List<Post> posts = subscriptions.stream()
                             .map((s) -> {
                                 Post p = new Post();
-                                p.setPost_body(String.valueOf(s.getPoster_id()));
+                                p.setPostBody(String.valueOf(s.getPosterId()));
                                 return p;
                             }).collect(Collectors.toList());
 

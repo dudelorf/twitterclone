@@ -60,6 +60,7 @@ public class AuthenticationFilter implements Filter{
                 for(Cookie c : cookies){
                     if(c.getName().equals("token")){
                         tokenCookie = c;
+                        break;
                     }
                 }
             }

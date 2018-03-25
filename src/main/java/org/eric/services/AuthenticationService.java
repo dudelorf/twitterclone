@@ -65,7 +65,7 @@ public class AuthenticationService extends BaseService{
         Timestamp tokenExp = generateTokenExpiration();
         
         currentUser.setToken(token);
-        currentUser.setToken_expiration(tokenExp);
+        currentUser.setTokenExpiration(tokenExp);
         
         userService.saveUser(currentUser);
         
@@ -95,7 +95,7 @@ public class AuthenticationService extends BaseService{
         boolean valid = false;
         
         User theUser = userService.loadByToken(token);
-        Timestamp tokenExp = theUser.getToken_expiration();
+        Timestamp tokenExp = theUser.getTokenExpiration();
         if(tokenExp == null){
             valid = false;
         }else if(tokenExp.toInstant().isAfter(Instant.now())){

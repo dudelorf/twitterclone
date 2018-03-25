@@ -11,7 +11,7 @@ public class User {
     private String salt = "";
     private String password = "";
     private String token = "";
-    private Timestamp token_expiration = null;
+    private Timestamp tokenExpiration = null;
     
     public String getUsername() {
         return username;
@@ -53,39 +53,39 @@ public class User {
         this.token = token;
     }
 
-    public Timestamp getToken_expiration() {
-        return token_expiration;
+    public Timestamp getTokenExpiration() {
+        return tokenExpiration;
     }
 
-    public void setToken_expiration(Timestamp token_expiration) {
-        this.token_expiration = token_expiration;
+    public void setTokenExpiration(Timestamp tokenExpiration) {
+        this.tokenExpiration = tokenExpiration;
     }
 
-	/**
-	 * @return the firstname
-	 */
-	public String getFirstname() {
-		return firstname;
-	}
+    /**
+     * @return the firstname
+     */
+    public String getFirstname() {
+            return firstname;
+    }
 
-	/**
-	 * @param firstname the firstname to set
-	 */
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
+    /**
+     * @param firstname the firstname to set
+     */
+    public void setFirstname(String firstname) {
+            this.firstname = firstname;
+    }
 
-	/**
-	 * @return the lastname
-	 */
-	public String getLastname() {
-		return lastname;
-	}
+    /**
+     * @return the lastname
+     */
+    public String getLastname() {
+            return lastname;
+    }
 
-	/**
-	 * @param lastname the lastname to set
-	 */
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
+    /**
+     * @param lastname the lastname to set
+     */
+    public void setLastname(String lastname) {
+            this.lastname = lastname;
+    }
 }

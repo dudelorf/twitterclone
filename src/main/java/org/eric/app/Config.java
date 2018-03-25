@@ -38,16 +38,8 @@ public class Config {
      */
     private static void loadProperties(Config config){
         try{
-            String appenv = System.getProperty("appenv");
-            String propertiesFile = "";
-
-            //Load production properties
-            if(appenv != null && appenv.equals("production")){
-                propertiesFile = "production.properties";
-            //Load dev properties
-            }else{
-                propertiesFile = "dev.properties";
-            }
+            
+            String propertiesFile = "application.properties";
 
             config.props.load(Thread.currentThread()
                 .getContextClassLoader()
