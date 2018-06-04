@@ -10,7 +10,7 @@
     <nav>
         <a href="/logout">Logout</a>
         <a href="/account">Account</a>
-        <a href="/posts">Posts</a>
+        <a href="/subscriptions">Manage Subscriptions</a>
         <a href="/newpost">New post</a>
     </nav>
     <h1>Welcome, $user.getFirstname() $user.getLastname()</h1>

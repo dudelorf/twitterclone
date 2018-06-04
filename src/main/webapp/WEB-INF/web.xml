@@ -51,6 +51,14 @@
         <servlet-name>logout</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>newpost</servlet-name>
+        <servlet-class>org.eric.servlets.NewPostServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>newpost</servlet-name>
+        <url-pattern>/newpost</url-pattern>
+    </servlet-mapping>
     <filter>
         <filter-name>Authentication Filter</filter-name>
         <filter-class>org.eric.filters.AuthenticationFilter</filter-class>

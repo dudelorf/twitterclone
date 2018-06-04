@@ -1,0 +1,45 @@
+package org.eric.servlets;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.dbcp.BasicDataSource;
+import org.eric.controllers.NewPostController;
+import org.eric.models.User;
+import org.eric.services.PostService;
+import org.eric.services.SubscriptionService;
+import org.eric.services.UserService;
+
+class NewPostServlet extends HttpServlet{
+
+    static final long serialVersionUID = 1;
+
+    protected NewPostController getController(BasicDataSource datasource){
+
+        SubscriptionService subscriptionService = new SubscriptionService(datasource);
+        PostService postService = new PostService(datasource, subscriptionService);
+
+        return new NewPostController(postService);
+    }
+    
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException{
+        response.setContentType("text/html");
+        
+        BasicDataSource datasource = (BasicDataSource) getServletContext()
+                                        .getAttribute("datasource");
+        
+        NewPostController controller = getController(datasource);
+        
+        User currentUser = (User) request.getAttribute("user");
+
+        PrintWriter out = response.getWriter();
+        out.print("New post");
+    }
+}
