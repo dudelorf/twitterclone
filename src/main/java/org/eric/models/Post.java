@@ -4,10 +4,15 @@ import java.sql.Timestamp;
 
 public class Post {
     
+    private int id;
     private int userId;
     private String postBody;
     private Timestamp postDate;
 
+    public int getId(){
+        return id;
+    }
+    
     public int getUserId() {
         return userId;
     }
