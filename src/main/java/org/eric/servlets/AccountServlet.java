@@ -18,7 +18,9 @@ import org.eric.services.UserService;
  */
 public class AccountServlet extends HttpServlet{
     
-    protected AccountController getController(BasicDataSource datasource){
+    private static final long serialVersionUID = 1L;
+
+	protected AccountController getController(BasicDataSource datasource){
         UserService userService = 
                 new UserService(datasource);
         AuthenticationService authenticationService = 
