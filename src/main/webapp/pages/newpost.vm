@@ -7,10 +7,18 @@
     <script type="text/javascript" src="/resources/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 </head>
 <body>
+    <nav>
+        <a href="/home">Home</a>
+    </nav>
     <h1>Create a new post</h1>
-    <form action="/post/new" method="POST">
-
-
+    <form action="/newpost" method="POST">
+        <textarea name="bodytext"></textarea>
+        <br/>
         <button type="submit">Post it!</button>
     </form>
+    <div>
+        #if($error)
+        <p>$error</p>
+        #end
+    </div>
 </body>

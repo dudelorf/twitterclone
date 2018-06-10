@@ -13,11 +13,10 @@ import org.eric.controllers.NewPostController;
 import org.eric.models.User;
 import org.eric.services.PostService;
 import org.eric.services.SubscriptionService;
-import org.eric.services.UserService;
 
-class NewPostServlet extends HttpServlet{
+public class NewPostServlet extends HttpServlet{
 
-    static final long serialVersionUID = 1;
+    static final long serialVersionUID = 1L;
 
     protected NewPostController getController(BasicDataSource datasource){
 
@@ -30,16 +29,39 @@ class NewPostServlet extends HttpServlet{
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException{
-        response.setContentType("text/html");
         
         BasicDataSource datasource = (BasicDataSource) getServletContext()
-                                        .getAttribute("datasource");
+        .getAttribute("datasource");
         
         NewPostController controller = getController(datasource);
         
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        out.print(controller.getNewPostForm());
+    }
+
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException{
+        
+        BasicDataSource datasource = (BasicDataSource) getServletContext()
+                                        .getAttribute("datasource");
+
+        NewPostController controller = getController(datasource);
+
         User currentUser = (User) request.getAttribute("user");
 
+        int userId = currentUser.getId();
+        String postBody = request.getParameter("bodytext");
+
+        response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        out.print("New post");
+
+        String error = controller.processPostForm(postBody, userId);
+        if(error != null){
+            out.print(controller.showPostSaveErrors(error));
+        }else{
+            response.sendRedirect("/home");
+        }
     }
 }

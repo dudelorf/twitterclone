@@ -2,7 +2,6 @@ package org.eric.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.dbutils.ResultSetHandler;
@@ -104,6 +103,7 @@ public class PostService extends BaseService{
         String sql = "SELECT * "
                    + "FROM posts "
                    + "WHERE userId = ? "
+                   + "ORDER BY postDate DESC "
                    + "LIMIT 10 "
                    + "OFFSET ? ";
         List<Post> posts = query(handler, sql, userId, offset);
@@ -124,10 +124,10 @@ public class PostService extends BaseService{
     public List<Post> getRecentSystemPosts(){
         ResultSetHandler<List<Post>> handler = new BeanListHandler<>(Post.class);
 
-        String sql = " SELECT * "
-                   + " FROM posts "
-                   + " ORDER BY postDate "
-                   + " LIMIT 10 ";
+        String sql = "SELECT * "
+                   + "FROM posts "
+                   + "ORDER BY postDate DESC "
+                   + "LIMIT 10 ";
 
         List<Post> posts = query(handler, sql);
         if(posts == null){
