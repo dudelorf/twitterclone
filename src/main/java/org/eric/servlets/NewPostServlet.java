@@ -18,6 +18,9 @@ public class NewPostServlet extends HttpServlet{
 
     static final long serialVersionUID = 1L;
 
+    /**
+     * Gets controller for newPost pages
+     */
     protected NewPostController getController(BasicDataSource datasource){
 
         SubscriptionService subscriptionService = new SubscriptionService(datasource);
@@ -26,6 +29,9 @@ public class NewPostServlet extends HttpServlet{
         return new NewPostController(postService);
     }
     
+    /**
+     * Gets the new post form
+     */
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException{
@@ -40,6 +46,11 @@ public class NewPostServlet extends HttpServlet{
         out.print(controller.getNewPostForm());
     }
 
+    /**
+     * Process a new post
+     * 
+     * Any errors that occurred during processing are shown on form
+     */
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException{
@@ -52,12 +63,13 @@ public class NewPostServlet extends HttpServlet{
         User currentUser = (User) request.getAttribute("user");
 
         int userId = currentUser.getId();
+        String userName = currentUser.getUsername();
         String postBody = request.getParameter("bodytext");
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
 
-        String error = controller.processPostForm(postBody, userId);
+        String error = controller.processPostForm(postBody, userId, userName);
         if(error != null){
             out.print(controller.showPostSaveErrors(error));
         }else{

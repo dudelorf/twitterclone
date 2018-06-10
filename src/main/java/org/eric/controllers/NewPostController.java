@@ -17,11 +17,12 @@ public class NewPostController extends BaseController{
         return renderView(ctx, "pages/newpost.vm");
     }
 
-    public String processPostForm(String postBody, int userId){
+    public String processPostForm(String postBody, int userId, String userName){
 
         Post post = new Post();
         post.setPostBody(postBody);
         post.setUserId(userId);
+        post.setUserName(userName);
 
         if(postBody.length() == 0){
             return "Please enter post.";

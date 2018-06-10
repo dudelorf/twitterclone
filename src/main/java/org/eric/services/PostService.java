@@ -30,13 +30,15 @@ public class PostService extends BaseService{
         String sql = "INSERT INTO POSTS "
                    + "( "
                    + " userId, "
+                   + " userName, "
                    + " postBody, "
                    + " postDate "
                    + " ) VALUES "
-                   + " (?, ?, NOW()) ";
+                   + " (?, ?, ?, NOW()) ";
         
         return update(sql,
                       post.getUserId(),
+                      post.getUserName(),
                       post.getPostBody()) != -1;
     }
     

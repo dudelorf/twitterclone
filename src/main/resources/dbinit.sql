@@ -22,9 +22,11 @@ drop table if exists posts;
 create table posts (
     id int PRIMARY KEY AUTO_INCREMENT NOT NULL,
     userId int NOT NULL,
+    username VARCHAR(128) NOT NULL,
     postBody TEXT,
     postDate DATETIME
 );
+ALTER TABLE posts ADD INDEX userId (userId);
 ALTER TABLE posts ADD INDEX postDate (postDate);
 
 drop table if exists subscriptions;
