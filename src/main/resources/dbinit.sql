@@ -28,11 +28,3 @@ create table posts (
 );
 ALTER TABLE posts ADD INDEX userId (userId);
 ALTER TABLE posts ADD INDEX postDate (postDate);
-
-drop table if exists subscriptions;
-create table subscriptions (
-    id int PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    subscriberId int NOT NULL,
-    posterId int NOT NULL
-);
-ALTER TABLE subscriptions ADD INDEX subscriberId (subscriberId);
