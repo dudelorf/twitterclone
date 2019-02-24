@@ -2,6 +2,9 @@ package com.ericrkinzel.models;
 
 import java.sql.Timestamp;
 
+/**
+ * User / account model
+ */
 public class User {
 
     private int id = -1;

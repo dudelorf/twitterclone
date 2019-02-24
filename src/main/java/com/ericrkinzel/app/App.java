@@ -7,11 +7,21 @@ import javax.servlet.ServletContextListener;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.velocity.app.Velocity;
 
+/**
+ * Main app initialization class
+ * 
+ * Responsible for setting up core services and configuration for
+ * application when first initialized.
+ */
 public class App implements ServletContextListener {
     
-    /**
-     * App initialization
-     */
+	/**
+	 * App initialization
+	 * 
+	 * Sets up all core services and configuration
+	 * 
+	 * @param sce servelet cotext
+	 */
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext ctx = sce.getServletContext();
@@ -30,13 +40,15 @@ public class App implements ServletContextListener {
      * 
      * @param templateDir base directory to load velocicty templates
      */
-    private void initVelocity(String templateDir){  System.out.println(templateDir);
+    private void initVelocity(String templateDir){
         Velocity.setProperty("file.resource.loader.path", templateDir);
         Velocity.init();
     }
     
     /**
      * Initializes and configures database connection pool
+     * 
+     * @param config config object containing database properties
      */
     private BasicDataSource initDatasource(Config config){
         BasicDataSource dbpool = new BasicDataSource();

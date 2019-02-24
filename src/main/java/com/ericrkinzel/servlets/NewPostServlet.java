@@ -12,8 +12,10 @@ import org.apache.commons.dbcp.BasicDataSource;
 import com.ericrkinzel.controllers.NewPostController;
 import com.ericrkinzel.models.User;
 import com.ericrkinzel.services.PostService;
-import com.ericrkinzel.services.SubscriptionService;
 
+/**
+ * Servlet for new post routes
+ */
 public class NewPostServlet extends HttpServlet{
 
     static final long serialVersionUID = 1L;
@@ -23,8 +25,7 @@ public class NewPostServlet extends HttpServlet{
      */
     protected NewPostController getController(BasicDataSource datasource){
 
-        SubscriptionService subscriptionService = new SubscriptionService(datasource);
-        PostService postService = new PostService(datasource, subscriptionService);
+        PostService postService = new PostService(datasource);
 
         return new NewPostController(postService, this.getServletContext());
     }

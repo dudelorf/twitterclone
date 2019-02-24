@@ -27,6 +27,15 @@ public class AuthenticationFilter implements Filter{
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {}
 
+    /**
+     * Applies security to all requests
+     * 
+     * Resources and whitelisted routes are not subject to security.
+     * If route is subject to security filter ensures a valid token is present
+     * before proceeding. Failure to authenticate will clear existing token
+     * and redirect to login. Successful authentication will set the current
+     * user details as a request attribute.
+     */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
         throws IOException, ServletException {
@@ -34,30 +43,32 @@ public class AuthenticationFilter implements Filter{
         HttpServletRequest httpReq = (HttpServletRequest) request;
         HttpServletResponse httpResp = (HttpServletResponse) response;
         
-        //Get route information
         List<String> whitelist = Config.getInstance().getWhitelistRoutes();
+        
+        //Get route information
         String route = httpReq.getRequestURI()
         	// remove context from route
     		.replace(httpReq.getServletContext().getContextPath(), "")
     		//remove leading '/'
 	        .substring(1);
         
-        //Don't worry about webapp resources
+        //Don't worry about web resources
         if(route.startsWith("resources")){
             chain.doFilter(request, response);
             return;
         }
 
-        //Instantiate authentication service
+        //Instantiate authentication service to validate token
         BasicDataSource datasource = (BasicDataSource) request.getServletContext()
                                         .getAttribute("datasource");
-        UserService userService = 
-                new UserService(datasource);
+        UserService userService = new UserService(datasource);
+        
         AuthenticationService authenticationService = 
                 new AuthenticationService(datasource, userService);
      
         if(!route.equals("") && !whitelist.contains(route)){
             
+        	// Check for access token
             Cookie[] cookies = httpReq.getCookies();
             Cookie tokenCookie = null;
             if(cookies != null){
@@ -75,14 +86,14 @@ public class AuthenticationFilter implements Filter{
                 httpResp.addCookie(tokenCookie);
             }
 
-            //token not valid, log out
             if(!authenticationService.validateToken(tokenCookie.getValue())){
+            	// Token not valid, log out
                 tokenCookie.setMaxAge(0);
                 httpResp.addCookie(tokenCookie);
                 httpResp.sendRedirect(httpReq.getServletContext().getContextPath());
                 return;
             }else{
-                //store current user
+                // Store current user
                 User currentUser = userService.loadByToken(tokenCookie.getValue());
                 httpReq.setAttribute("user", currentUser);
             }

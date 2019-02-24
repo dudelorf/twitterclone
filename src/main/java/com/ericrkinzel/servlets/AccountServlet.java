@@ -13,8 +13,7 @@ import com.ericrkinzel.services.AuthenticationService;
 import com.ericrkinzel.services.UserService;
 
 /**
- *
- * @author ericr
+ * Servlet for account route
  */
 public class AccountServlet extends HttpServlet{
     
@@ -29,6 +28,9 @@ public class AccountServlet extends HttpServlet{
         return new AccountController(userService, authenticationService, this.getServletContext());
     }
     
+	/**
+	 * Gets account details page
+	 */
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException{
@@ -56,6 +58,9 @@ public class AccountServlet extends HttpServlet{
                                                        error));
     }
     
+    /**
+     * Handles account details form
+     */
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException{

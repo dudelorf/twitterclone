@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ericrkinzel.controllers;
 
 import java.io.StringWriter;
@@ -14,19 +9,23 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 
 /**
- *
- * @author ericr
+ * Base class for all controllers
+ * 
+ * Shared functionality required by all other controllers
  */
 public class BaseController {
     
 	private ServletContext context;
 	
+	/**
+	 * @param context current servlet context
+	 */
 	public BaseController(ServletContext context) {
 		this.context = context;
 	}
 	
     /**
-     * Renders the view
+     * Renders a view
      * 
      * @param context data to render into template
      * @param templateFile path to template
@@ -42,5 +41,4 @@ public class BaseController {
 
         return writer.toString();
     }
-    
 }

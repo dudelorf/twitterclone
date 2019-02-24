@@ -8,10 +8,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Servlet for logout routes
+ */
 public class LogoutServlet extends HttpServlet {
     
     static final long serialVersionUID = 1;
 
+    /**
+     * Logs out the user
+     */
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException{

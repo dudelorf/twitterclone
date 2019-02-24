@@ -12,9 +12,11 @@ import org.apache.commons.dbcp.BasicDataSource;
 import com.ericrkinzel.controllers.HomeController;
 import com.ericrkinzel.models.User;
 import com.ericrkinzel.services.PostService;
-import com.ericrkinzel.services.SubscriptionService;
 import com.ericrkinzel.services.UserService;
 
+/**
+ * Servlet for the home page
+ */
 public class HomeServlet extends HttpServlet {
     
     static final long serialVersionUID = 1;
@@ -22,12 +24,14 @@ public class HomeServlet extends HttpServlet {
     protected HomeController getController(BasicDataSource datasource){
         UserService userService = new UserService(datasource);
         
-        SubscriptionService subscriptionService = new SubscriptionService(datasource);
-        PostService postService = new PostService(datasource, subscriptionService);
+        PostService postService = new PostService(datasource);
 
         return new HomeController(userService, postService, this.getServletContext());
     }
     
+    /**
+     * Gets home page
+     */
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException{

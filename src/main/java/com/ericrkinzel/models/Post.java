@@ -2,6 +2,9 @@ package com.ericrkinzel.models;
 
 import java.sql.Timestamp;
 
+/**
+ * Single post model
+ */
 public class Post {
     
     private int id;

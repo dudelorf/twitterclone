@@ -13,6 +13,9 @@ import com.ericrkinzel.services.AuthenticationService;
 import com.ericrkinzel.controllers.LoginController;
 import com.ericrkinzel.services.UserService;
 
+/**
+ * Servlet for login routes
+ */
 public class LoginServlet extends HttpServlet{
 
     static final long serialVersionUID = 1;
@@ -26,6 +29,9 @@ public class LoginServlet extends HttpServlet{
         return new LoginController(authenticationService, this.getServletContext());
     }
     
+    /**
+     * Gets login page
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException{
@@ -42,12 +48,7 @@ public class LoginServlet extends HttpServlet{
     /**
      * Master login route
      * 
-     * Logs user in and sets credentials
-     * 
-     * @param request
-     * @param response
-     * @throws IOException
-     * @throws ServletException 
+     * Logs user in and sets credentials on request 
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

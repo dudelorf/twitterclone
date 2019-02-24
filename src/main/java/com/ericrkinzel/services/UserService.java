@@ -5,12 +5,21 @@ import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import com.ericrkinzel.models.User;
 
+/**
+ * Manages user data
+ */
 public class UserService extends BaseService{
     
     public UserService(BasicDataSource datasource) {
         super(datasource);
     }
     
+    /**
+     * Gets user by email
+     * 
+     * @param email
+     * @return user details
+     */
     public User loadByEmail(String email){
         ResultSetHandler<User> handler = new BeanHandler<>(User.class);
 
@@ -26,6 +35,12 @@ public class UserService extends BaseService{
         }
     }
     
+    /**
+     * Gets user by username
+     * 
+     * @param username
+     * @return user details
+     */
     public User loadByUsername(String username){
         ResultSetHandler<User> handler = new BeanHandler<>(User.class);
 
@@ -41,6 +56,12 @@ public class UserService extends BaseService{
         }
     }
 
+    /**
+     * Gets user by id
+     * 
+     * @param id
+     * @return user details
+     */
     public User loadById(int id){
         ResultSetHandler<User> handler = new BeanHandler<>(User.class);
 
@@ -56,6 +77,12 @@ public class UserService extends BaseService{
         }
     }
     
+    /**
+     * Gets user by access token
+     * 
+     * @param token
+     * @return user details
+     */
     public User loadByToken(String token){
         ResultSetHandler<User> handler = new BeanHandler<>(User.class);
 
@@ -71,6 +98,12 @@ public class UserService extends BaseService{
         }
     }
     
+    /**
+     * Saves user detals
+     * 
+     * @param theUser
+     * @return success of save
+     */
     public boolean saveUser(User theUser){
         if(theUser.getId() != -1){
             return updateUser(theUser);
@@ -79,6 +112,12 @@ public class UserService extends BaseService{
         }
     }
     
+    /**
+     * Updates user details
+     * 
+     * @param theUser
+     * @return success of operation
+     */
     protected boolean updateUser(User theUser){
         String sql = "UPDATE users SET "
                    + " email = ?, "
@@ -103,6 +142,12 @@ public class UserService extends BaseService{
                       ) != -1;
     }
     
+    /**
+     * Saves new user object
+     * 
+     * @param theUser
+     * @return success of operation
+     */
     protected boolean saveNewUser(User theUser){
         String sql = "INSERT INTO users "
                    + "( "

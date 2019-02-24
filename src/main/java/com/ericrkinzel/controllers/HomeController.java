@@ -10,6 +10,9 @@ import com.ericrkinzel.models.User;
 import com.ericrkinzel.services.PostService;
 import com.ericrkinzel.services.UserService;
 
+/**
+ * Handles home routes
+ */
 public class HomeController extends BaseController {
 
     protected final UserService userService;
@@ -26,6 +29,12 @@ public class HomeController extends BaseController {
         this.postService = postService;
     }
 
+    /**
+     * Renders the home page
+     * 
+     * @param currentUser current active user
+     * @return rendered view
+     */
     public String getHomePage(User currentUser) {
         VelocityContext context = getHomePageData(currentUser);
         String page = renderView(context, "pages/home.vm");
@@ -36,11 +45,12 @@ public class HomeController extends BaseController {
      * Gathers all data for page and adds it to context for view
      * 
      * @param currentUser current application user
+     * @return populated context for template
      */
     private VelocityContext getHomePageData(User currentUser) {
         VelocityContext context = new VelocityContext();
 
-        List<Post> newPosts = postService.getNewPosts(currentUser.getId());
+        List<Post> newPosts = postService.getNewPosts();
         context.put("posts", newPosts);
 
         context.put("user", currentUser);

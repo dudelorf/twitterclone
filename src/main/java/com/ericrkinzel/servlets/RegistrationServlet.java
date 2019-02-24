@@ -11,6 +11,9 @@ import com.ericrkinzel.controllers.RegistrationController;
 import com.ericrkinzel.services.AuthenticationService;
 import com.ericrkinzel.services.UserService;
 
+/**
+ * Servlet for registration routes
+ */
 public class RegistrationServlet extends HttpServlet{
     
     static final long serialVersionUID = 1;
@@ -24,6 +27,9 @@ public class RegistrationServlet extends HttpServlet{
         return new RegistrationController(authenticationService, this.getServletContext());
     }
     
+    /**
+     * Shows registration page
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException{
@@ -37,6 +43,9 @@ public class RegistrationServlet extends HttpServlet{
         out.print(controller.showRegistrationPage());
     }
     
+    /**
+     * Processes registration from
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
            throws ServletException, IOException{
@@ -62,7 +71,7 @@ public class RegistrationServlet extends HttpServlet{
                                                       firstname,
                                                       lastname);
         if(error == null){
-            request.getRequestDispatcher(this.getServletContext().getContextPath() + "/login").forward(request, response);
+            request.getRequestDispatcher("/login").forward(request, response);
         }else{
             out.print(controller.showRegistrationErrors(error));
         }

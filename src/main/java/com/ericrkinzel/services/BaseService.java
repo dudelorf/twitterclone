@@ -6,7 +6,11 @@ import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 
-
+/**
+ * Base for all service classes
+ * 
+ * Provides common functionality used by all services
+ */
 public class BaseService {
 
     protected BasicDataSource datasource;
@@ -15,6 +19,12 @@ public class BaseService {
         this.datasource = datasource;
     }
     
+    /**
+     * Returns connection from datasource
+     * 
+     * @return connection
+     * @throws SQLException
+     */
     public Connection getConnection() throws SQLException{
         
         return datasource.getConnection();

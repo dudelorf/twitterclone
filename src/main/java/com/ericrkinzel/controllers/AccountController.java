@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.ericrkinzel.controllers;
 
 import javax.servlet.ServletContext;
@@ -13,12 +8,12 @@ import com.ericrkinzel.services.AuthenticationService;
 import com.ericrkinzel.services.UserService;
 
 /**
- *
- * @author ericr
+ * Handles account routes
  */
 public class AccountController extends BaseController{
     
     protected UserService userService;
+    
     protected AuthenticationService authenticationService;
     
     public AccountController(
@@ -31,6 +26,14 @@ public class AccountController extends BaseController{
         this.authenticationService = authenticationService;
     }
     
+    /**
+     * Displays the account edit page
+     *  
+     * @param currentUser active user
+     * @param message user notification message 
+     * @param error reported errors
+     * @return rendered view
+     */
     public String getAccountEditPage(User currentUser, 
                                      String message,
                                      String error){
@@ -47,6 +50,17 @@ public class AccountController extends BaseController{
         return renderView(ctx, "pages/accountEdit.vm");
     }
     
+    /**
+     * Saves user account information
+     * 
+     * @param currentUser current active user details
+     * @param email new email
+     * @param username new username
+     * @param firstname new first name
+     * @param lastname new last name
+     * @param password new password
+     * @return error message if applicable, null otherwise
+     */
     public String updateAccount(User currentUser,
                                 String email,
                                 String username,

@@ -8,15 +8,14 @@ import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import com.ericrkinzel.models.Post;
-import com.ericrkinzel.models.Subscription;
 
+/**
+ * Manages post data
+ */
 public class PostService extends BaseService{
 
-    private SubscriptionService subscriptionService;
-
-    public PostService(BasicDataSource datasource, SubscriptionService subscriptionService) {
+    public PostService(BasicDataSource datasource) {
         super(datasource);
-        this.subscriptionService = subscriptionService;
     }
 
     /**
@@ -117,13 +116,13 @@ public class PostService extends BaseService{
     }
 
     /**
+     * Gets posts for the homepage
+     * 
      * Gets 10 most recent posts in the system
      * 
-     * Used to populate post list when user has no subscriptions
-     * 
-     * @return list of 10 most recent posts
+     * @return list of posts for homepage
      */
-    public List<Post> getRecentSystemPosts(){
+    public List<Post> getNewPosts(){
         ResultSetHandler<List<Post>> handler = new BeanListHandler<>(Post.class);
 
         String sql = "SELECT * "
@@ -137,30 +136,6 @@ public class PostService extends BaseService{
         }else{
             return posts;
         }
-    }
-    
-    /**
-     * Gets posts for the homepage
-     * 
-     * Attempts to get posts based on subscriptions. In the event no subscriptions
-     * have been set yet this will get 10 most recent posts in the system.
-     * 
-     * @param userId logged in user
-     * @return list of posts for homepage
-     */
-    public List<Post> getNewPosts(int userId){
-        List<Subscription> subscriptions = subscriptionService.getSubscriptions(userId);
-        List<Post> posts = null;
-
-        if(subscriptions.size() > 0){
-            //get latest posts from subscribed users
-            posts = getRecentSystemPosts();
-        }else{
-            //get latest posts
-            posts = getRecentSystemPosts();
-        }
-
-        return posts;
     }
     
 }
